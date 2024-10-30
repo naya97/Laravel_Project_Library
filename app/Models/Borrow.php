@@ -17,10 +17,14 @@ class Borrow extends Model
         return $this->belongsTo(Book::class);
     }
 
+    public function user() : BelongsTo {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Who has my PK 
      */
-    public function user() : HasMany {
-        return $this->hasMany(User::class);
-    }
+    // public function user() : HasMany {
+    //     return $this->hasMany(User::class);
+    // }
 }

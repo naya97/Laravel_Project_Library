@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,19 +25,21 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'borrow_id',
+        // 'borrow_id',
         // 'reading_list_id',
     ];
 
     /**
      * My FK BelongsTo
      */
-    public function loan_books() : BelongsTo {
-        return $this->belongsTo(Borrow::class);
-    }
-    
     public function reading_list() : HasOne {
         return $this->hasOne(ReadingList::class);
+    }
+    /**
+     * who has my PK
+     */
+    public function borrows() : HasMany {
+        return $this->hasMany(Borrow::class);
     }
 
     /**

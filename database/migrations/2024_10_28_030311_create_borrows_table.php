@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('borrows', function (Blueprint $table) {
             $table->id();
             $table->foreignId('book_id')->constrained('books','id');
+            $table->foreignId('user_id')->constrained('users','id');
             $table->timestamps();
         });
     }
