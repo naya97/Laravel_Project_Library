@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            // CategorySeeder::class,
-            // AuthorSeeder::class,
-           // BookSeeder::class,
-            // BorrowSeeder::class,
-            // ReadingListBookSeeder::class,
+        //     CategorySeeder::class,
+        //     AuthorSeeder::class,
+        //    BookSeeder::class,
+        //     BorrowSeeder::class,
+        //     ReadingListBookSeeder::class,
         ]);
     }
 }
