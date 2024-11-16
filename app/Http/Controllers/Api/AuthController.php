@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'login' => 'required|string',
             'password' => 'required|string|min:6',
         ]);
 
@@ -21,10 +21,19 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if (! $token = Auth::attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $login = $request->input('login');
+        $password = $request->input('password');
+
+        if(filter_var($login,FILTER_VALIDATE_EMAIL)) {
+            $credentials = ['email' => $login,'password' => $password];
+        }
+        else {
+            $credentials = ['phone' => $login, 'password' => $password];
         }
 
+        if (! $token = Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         return $this->createNewToken($token);
     }
 
@@ -36,8 +45,9 @@ class AuthController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
+            'phone' => 'required|digits:10|regex:/^[0-9]+$/',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6', //|regex:/[@$!%*?&]/
             'borrow_id' => 'nullable',
             // 'reading_list_id' => ReadingList::create(),  
         ]);
@@ -50,7 +60,7 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-        $readinList = ReadingList::query()->create([
+        $readingList = ReadingList::query()->create([
             'user_id' => $user->id,
         ]);
         

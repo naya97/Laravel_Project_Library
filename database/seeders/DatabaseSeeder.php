@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         //     CategorySeeder::class,
         //     AuthorSeeder::class,
         //    BookSeeder::class,
-        //     BorrowSeeder::class,
-        //     ReadingListBookSeeder::class,
+        // BorrowSeeder::class,
+        // ReadingListBookSeeder::class,
         ]);
     }
 }
